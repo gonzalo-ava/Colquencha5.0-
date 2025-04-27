@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Netflix Clone - Catálogo de películas, teatro y fiestas. Disfruta de contenido exclusivo.">
+    <meta name="keywords" content="Netflix, películas, teatro, fiestas, streaming">
+    <meta name="author" content="Tu Nombre">
+    <title>Netflix Clone - Catálogo de Películas y Teatro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos generales */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #141414;
+            color: white;
+            scroll-behavior: smooth;
+        }
+
+        /* Encabezado */
+        header {
+            background: #111;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #e50914;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .user {
+            font-size: 1em;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        /* Navegación */
+        nav {
+            display: flex;
+            justify-content: center;
+            background: #222;
+            margin-bottom: 20px;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        nav button {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s, transform 0.3s;
+            border-radius: 5px;
+        }
+
+        nav button:hover {
+            background: #e50914;
+            transform: scale(1.1);
+        }
+
+        nav button.active {
+            background: #e50914;
+        }
+
+        /* Contenedor principal */
+        .container {
+            padding: 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 2em;
+            text-align: center;
+            animation: slideIn 1s ease-in-out;
+        }
+
+        /* Galería */
+        .movies-container, .theater-container, .fiesta-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .movie, .play {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+            background-color: #000;
+        }
+
+        .movie img, .play img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .movie:hover, .play:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+        }
+
+        .movie-title, .play-title {
+            position: absolute;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            font-size: 1em;
+            font-weight: bold;
+            transition: opacity 0.3s;
+        }
+
+        .movie:hover .movie-title, .play:hover .play-title {
+            opacity: 0.9;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeInModal 0.5s ease-in-out;
+        }
+
+        .modal-content {
+            background: #000;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-content iframe,
+        .modal-content video {
+            width: 100%;
+            height: 450px;
+            border: none;
+        }
+
+        .modal-close {
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            text-align: right;
+            padding: 10px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 1001;
+        }
+
+        /* Pie de página */
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            background: #111;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        footer a {
+            color: #e50914;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: #fff;
+        }
+
+        /* Animaciones */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fadeInModal {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Ocultar secciones */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Encabezado -->
+    <header>
+        <div class="logo">Netflix Clone</div>
+        <div class="user">👤 Gonzalo</div>
+    </header>
+
+    <!-- Navegación -->
+    <nav>
+        <button id="btnMovies" class="active">🎬 Catálogo de Películas</button>
+        <button id="btnTheater">🎭 Teatro</button>
+        <button id="btnFiesta">🎉 Fiesta</button>
+    </nav>
+
+    <!-- Sección de Películas -->
+    <div class="container" id="moviesSection">
+        <h2>🎬 Catálogo de Películas</h2>
+        <div class="movies-container" id="moviesContainer"></div>
+    </div>
+
+    <!-- Sección de Teatro -->
+    <div class="container hidden" id="theaterSection">
+        <h2>🎭 Teatro</h2>
+        <div class="theater-container" id="theaterContainer"></div>
+    </div>
+
+    <!-- Sección de Fiesta -->
+    <div class="container hidden" id="fiestaSection">
+        <h2>🎉 Fiesta</h2>
+        <div class="fiesta-container" id="fiestaContainer"></div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="movieModal">
+        <div class="modal-content">
+            <div class="modal-close" onclick="closeModal()">✖</div>
+            <iframe id="movieFrame" src="" allowfullscreen></iframe>
+            <video id="movieVideo" controls style="display: none;">
+                <source id="movieSource" src="" type="video/mp4">
+                Tu navegador no soporta la reproducción de video.
+            </video>
+        </div>
+    </div>
+
+    <!-- Pie de página -->
+    <footer>
+        <p>© 2024 Netflix Clone. Todos los derechos reservados.</p>
+        <div>
+            <a href="https://facebook.com" target="_blank">Facebook</a>
+            <a href="https://twitter.com" target="_blank">Twitter</a>
+            <a href="https://instagram.com" target="_blank">Instagram</a>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        const movies = [
+            { title: "Capítulo 1", image: "img/2.jpg", link: "https://mega.nz/embed/LmIF0TgA#46165nE7Lk80DrwSYYVcT9FYvFh0Sm7wSLczFTjHOes" },
+            { title: "Capítulo 2", image: "img/2.jpg", link: "https://mega.nz/embed/j2BW2DpC#fOBAdFIVTzdj-oo6wYAD7ftNsE1Cbj_9Lbm2xCmGvUg" },
+            { title: "Capítulo 3", image: "img/2.jpg", link: "https://mega.nz/embed/L2hlWI6T#QVmotg6s7Kd-HRVcXRK9RZflGZsUy9CYwsOl88ZGdlk" },
+            { title: "Capítulo 4", image: "img/2.jpg", link: "https://mega.nz/embed/K3hkGbYS#3PhtCT5hhx2GwDGeImI1U6Rdm8eWC3Oo4F_4adk6PUU" },
+            { title: "Capítulo 5", image: "img/2.jpg", link: "https://mega.nz/embed/j6YhkL6J#u3g7dRPU-yjsuqu-OYXJft7iKssUEK-pFyPiqIKcQRk" },
+            { title: "Capítulo 6", image: "img/2.jpg", link: "https://mega.nz/embed/P74mzZiK#yrLxUm8DvS6Pr2GsY3AEQPO5OWxreZc9zWBM5Tw3Eb4" },
+            { title: "Capítulo 7", image: "img/2.jpg", link: "https://mega.nz/embed/eipiWZhI#NK3j2cuWjQ_9jCOIRy6XnJcsZUqgGQ3W2tYELsqgQkY" },
+            { title: "Capítulo 8", image: "img/2.jpg", link: "https://mega.nz/embed/fr5WETaL#Vm7ZxqXApcXfTblZItyKwd-1E0p6NZv48rV6tqTCvck" },
+            { title: "Capítulo 9", image: "img/2.jpg", link: "https://mega.nz/embed/ujYinRDL#tgbfqIk7lG36H81YYYtOTlmtUPTggS9rDiZGyGFbUNw" },
+            { title: "Capítulo 10", image: "img/2.jpg", link: "https://mega.nz/embed/e2JC0JRD#7VMJvhito8Pko-BoaCiZZltC8yASPvVOUk5hfy0Cz-8" },
+            { title: "Capítulo 11", image: "img/2.jpg", link: "https://mega.nz/embed/Tj4QhbxL#p1_DSXqGPvDU4b12TXQMh8VxWli9QH3XPfaEFJQkwC0" },
+            { title: "Capítulo 12", image: "img/2.jpg", link: "https://mega.nz/embed/LuB22YSC#0zreezd_L0RZTunzFHQITTwyUQcnw6szbtD6E2aGBn8" },
+            { title: "Capítulo 13", image: "img/2.jpg", link: "https://mega.nz/embed/GvhjUYCS#aLgBSk8S9VvKPaLolFWgBoert0p8KuBD1ARBy-RM1YU" },
+            { title: "Capítulo 14", image: "img/2.jpg", link: "https://mega.nz/embed/u2xHXbbT#wh80aocXna0mVOsmFmjb5A3AKu5IAEALP9topO5Wyx4" },
+            { title: "Capítulo 15", image: "img/2.jpg", link: "https://mega.nz/embed/r6ARhJ5S#WxIydM4SgaaSm3XXNTtnCWkYFgmDjllS13byUK5FKQI" },
+            { title: "Capítulo 16", image: "img/2.jpg", link: "https://mega.nz/embed/D7h1HYxb#oonmqQwENKtf8LwjLdW7xQ9pCw97TJDKJbtJtbQkpGI" },
+            { title: "Capítulo 17", image: "img/2.jpg", link: "https://mega.nz/embed/wjtAFKrK#DcoXuwL3ID6eQ99POfLUzycaWn8RHtTkVsC4KnqgevI" },
+            { title: "Capítulo 18", image: "img/2.jpg", link: "https://mega.nz/embed/0yk1WSpZ#g4xM1CVX3CJttszxMAEeiXZFPzXH4loo5C2x4j-k5U8" },
+            { title: "Capítulo 19", image: "img/2.jpg", link: "https://mega.nz/embed/h68W3ZST#2e6kQTw-Ii3h0U8YMQhe_fTaar9wMM1Xbwh8CCaK-Pk" },
+            { title: "Capítulo 20 final", image: "img/2.jpg", link: "https://mega.nz/embed/I3EhERja#tZ9Ld6TXCIvMbVfI_SLVPpaVCzgcvOICYYN2nkX9op4" }
+        ];
+
+        const theater = [
+            { title: "Kauka Terapia 1", image: "img/3.jpeg", link: "https://mega.nz/embed/sy9j2KxQ#3z7KjPbPSE5aHCyAhWggoWtw3MgN6rKzTf0PIabUC_w" },
+            { title: "Kauka Terapia 2", image: "img/3.jpeg", link: "https://mega.nz/embed/EyNTUJJB#B1zfOJ4uKNdak4QT1wKEXMO255FAQlu9NdI-7-wc1hI" }
+        ];
+
+        const fiesta = [
+            { title: "15 de Agosto 2023 1", image: "img/Captura.jpg", link: "https://mega.nz/embed/U2FwETIC#4a6gg220HchevJTCiE4kKL-uiqi5Db9yPyGsJiBTDS8" },
+            { title: "2024 parte 1", image: "img/Captura.jpg", link: "https://mega.nz/embed/U2FwETIC#4a6gg220HchevJTCiE4kKL-uiqi5Db9yPyGsJiBTDS8" },
+            { title: "2024 parte 2", image: "img/Captura.jpg", link: "https://gofile.io/d/rGrRw4" }
+        ];
+        const Drakeyjosh = [
+            { title: "Drake and josh 1 ", image: "img/drake.jpg", link: "https://mega.nz/embed/57VD2YyT#2ivqOuiiRZ-_9kJx_M8DamOe4ISHgJ4uZIFT88SMrSQ" },
+            { title: "Drake and josh 2", image: "img/drake.jpg", link: "https://mega.nz/embed/ErlmVDoT#2CJkxGz1Qh-o8lWdMl0Mp342t-ul4ts3IzUdA7uFBcM" },
+            { title: "Drake and josh 3 ", image: "img/drake.jpg", link: "https://mega.nz/embed/unQxiL5D#n6TwWzK_zcWMLYKeNmc35-_2Wv6FEUh_XNxBTHH0b7U" }
+        ];
+        const Peliculas = [
+            { title: "Hackers1", image: "img/8.jpg", link: "https://mega.nz/embed/KixB3SjJ#tk3c2g4iU1K3G8QMjNfHt62tDM7tM6tmSA9h4VebwVE" },
+            
+            { title: "Una Pareja Explosiva 1", image: "img/19.jpg", link: "https://mega.nz/embed/uyAWhTLL#Y3p-9R8h4dlmRl8uN6rCqdh7vX2Vy5tE91QMu9HMtlQ" },
+        
+            { title: "Coco ", image: "img/coco.jpg", link: "https://mega.nz/embed/K2wWRZIS#4smlwHtSANRnTwjbtM4bHiYp9G6vgnd-1hhttZfvVE0" },
+            { title: "Una Cenicienta 1", image: "img/20.jpg", link: "https://mega.nz/embed/qv4SVDbR#9uB6i6g31W-MhH0auz5o-fJQ8Ijy2OMo3eZHVEfQfco" },
+            { title: "Una Cenicienta 2", image: "img/78.jpg", link: "https://mega.nz/embed/L3JFSJbJ#vOGkVOqzb1A8b5JhKVpsx9dqGNVrLKVLGwjpmpKEKyc" },
+            { title: "Una Cenicienta 3", image: "img/89.jpg", link: "https://mega.nz/embed/emISTZ4B#T1l2AN1yzmpLCtuc4CP43icg0a2H3uOw-xibMKolao8" },
+            { title: "El rey leon ", image: "img/unnamed.jpg", link: "https://mega.nz/embed/HvAR1JSK#yyXgKBu2-tQknYKa6XPqrb7MyRiU5Bd6x1ZdPHKg4Eg" },
+            { title: "Mi Socio 1 ", image: "img/images.jpg", link: "https://mega.nz/embed/b65hxaID#PnowsejjKj4OJkxjJue8lBt71f5QYnolUxqB3dtzB3Y" },
+       
+        ];
+
+
+        const moviesContainer = document.getElementById('moviesContainer');
+        const theaterContainer = document.getElementById('theaterContainer');
+        const fiestaContainer = document.getElementById('fiestaContainer');
+        const movieModal = document.getElementById('movieModal');
+        const movieFrame = document.getElementById('movieFrame');
+        const movieVideo = document.getElementById('movieVideo');
+        const movieSource = document.getElementById('movieSource');
+
+        function loadItems(items, container) {
+            container.innerHTML = '';
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.classList.add('movie');
+                div.innerHTML = `
+                    <img src="${item.image}" alt="${item.title}">
+                    <div class="movie-title">${item.title}</div>
+                `;
+                div.addEventListener('click', () => openModal(item.link));
+                container.appendChild(div);
+            });
+        }
+
+        loadItems(movies, moviesContainer);
+        loadItems(theater, theaterContainer);
+        loadItems(fiesta, fiestaContainer);
+
+        function openModal(link) {
+            if (link.includes("mega.nz")) {
+                movieFrame.src = link;
+                movieFrame.style.display = 'block';
+                movieVideo.style.display = 'none';
+            } else {
+                movieSource.src = link;
+                movieVideo.style.display = 'block';
+                movieFrame.style.display = 'none';
+                movieVideo.load();
+                movieVideo.play();
+            }
+            movieModal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            movieFrame.src = '';
+            movieSource.src = '';
+            movieVideo.pause();
+            movieModal.style.display = 'none';
+        }
+
+        document.getElementById('btnMovies').addEventListener('click', () => {
+            document.getElementById('moviesSection').classList.remove('hidden');
+            document.getElementById('theaterSection').classList.add('hidden');
+            document.getElementById('fiestaSection').classList.add('hidden');
+            document.getElementById('btnMovies').classList.add('active');
+            document.getElementById('btnTheater').classList.remove('active');
+            document.getElementById('btnFiesta').classList.remove('active');
+        });
+
+        document.getElementById('btnTheater').addEventListener('click', () => {
+            document.getElementById('moviesSection').classList.add('hidden');
+            document.getElementById('theaterSection').classList.remove('hidden');
+            document.getElementById('fiestaSection').classList.add('hidden');
+            document.getElementById('btnMovies').classList.remove('active');
+            document.getElementById('btnTheater').classList.add('active');
+            document.getElementById('btnFiesta').classList.remove('active');
+        });
+
+        document.getElementById('btnFiesta').addEventListener('click', () => {
+            document.getElementById('moviesSection').classList.add('hidden');
+            document.getElementById('theaterSection').classList.add('hidden');
+            document.getElementById('fiestaSection').classList.remove('hidden');
+            document.getElementById('btnMovies').classList.remove('active');
+            document.getElementById('btnTheater').classList.remove('active');
+            document.getElementById('btnFiesta').classList.add('active');
+        });
+    </script>
+</body>
+</html>

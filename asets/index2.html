@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix-like Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #141414;
+            color: white;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #000;
+        }
+        header h1 {
+            color: #e50914;
+            margin: 0;
+        }
+        .menu {
+            display: flex;
+            gap: 20px;
+        }
+        .menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .menu a:hover {
+            color: #e50914;
+        }
+        .container {
+            padding: 20px;
+        }
+        .container h2 {
+            margin-bottom: 20px;
+        }
+        .carousel {
+            position: relative;
+            max-width: 100%;
+            margin: auto;
+            overflow: hidden;
+        }
+        .carousel-images {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 10px 0;
+        }
+        .carousel-images::-webkit-scrollbar {
+            display: none;
+        }
+        .pelicula {
+            flex: 0 0 auto;
+            width: 200px;
+            text-align: center;
+        }
+        .pelicula img {
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .pelicula p {
+            margin: 8px 0 0;
+            font-size: 16px;
+        }
+        .carousel button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 15px;
+            cursor: pointer;
+            z-index: 1;
+            border-radius: 50%;
+        }
+        .prev {
+            left: 10px;
+        }
+        .next {
+            right: 10px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            width: 80%;
+            height: 80%;
+            background: white;
+            border-radius: 10px;
+            padding: 0;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .modal iframe {
+            flex-grow: 1;
+            width: 100%;
+            border: none;
+        }
+        .close {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 30px;
+            color: black;
+            cursor: pointer;
+            background: white;
+            border-radius: 50%;
+            padding: 5px 10px;
+            z-index: 2;
+        }
+        .close:hover {
+            background: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Netflix-like</h1>
+        <div class="menu">
+            <a href="https://www.google.com/">Inicio</a>
+            <a href="index1.html">Series</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <h2>Películas</h2>
+        <div class="carousel">
+            <div class="carousel-images" id="carousel-peliculas">
+                <div class="pelicula">
+                    <img src="img/8.jpg" alt="Película 1" onclick="abrirModal('https://mega.nz/embed/KixB3SjJ#tk3c2g4iU1K3G8QMjNfHt62tDM7tM6tmSA9h4VebwVE')">
+                    <p>Hacker </p>
+                </div>
+                <div class="pelicula">
+                    <img src="img/19.jpg" alt="Película 2" onclick="abrirModal('https://mega.nz/embed/uyAWhTLL#Y3p-9R8h4dlmRl8uN6rCqdh7vX2Vy5tE91QMu9HMtlQ')">
+                    <p>Una pareja Explosiva </p>
+                </div>
+                <div class="pelicula">
+                    <img src="img/coco.jpeg" alt="Película 3" onclick="abrirModal('https://mega.nz/embed/K2wWRZIS#4smlwHtSANRnTwjbtM4bHiYp9G6vgnd-1hhttZfvVE0')">
+                    <p>Coco</p>
+                </div>
+                <div class="pelicula">
+                    <img src="img/20.jpg" alt="Película 4" onclick="abrirModal('https://mega.nz/embed/qv4SVDbR#9uB6i6g31W-MhH0auz5o-fJQ8Ijy2OMo3eZHVEfQfco')">
+                    <p>La nueva Cenicienta 1</p>
+                </div>
+                <div class="pelicula">
+                    <img src="img/78.jpg" alt="Película 5" onclick="abrirModal('https://mega.nz/embed/L3JFSJbJ#vOGkVOqzb1A8b5JhKVpsx9dqGNVrLKVLGwjpmpKEKyc')">
+                    <p>La nueva Cenicienta 2</p>
+                </div>
+                <div class="pelicula">
+                    <img src="img/89.jpg" alt="Película 6" onclick="abrirModal('https://mega.nz/embed/emISTZ4B#T1l2AN1yzmpLCtuc4CP43icg0a2H3uOw-xibMKolao8')">
+                    <p>La nueva Cenicienta 3</p>
+                </div>
+            </div>
+            <button class="prev" onclick="moverCarousel('carousel-peliculas', -1)">&#10094;</button>
+            <button class="next" onclick="moverCarousel('carousel-peliculas', 1)">&#10095;</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Jardín Secreto</h2>
+        <div class="carousel">
+            <div class="carousel-images" id="carousel-jardin">
+                <div class="pelicula">
+                    <img src="img/2.jpg" alt="Capítulo 1" onclick="abrirModal('https://mega.nz/embed/LmIF0TgA#46165nE7Lk80DrwSYYVcT9FYvFh0Sm7wSLczFTjHOe')">
+                    <p>Capítulo 1</p>
+                </div>
+                <div class="pelicula">
+                    <img src="img/2.jpg" alt="Capítulo 2" onclick="abrirModal('https://mega.nz/embed/j2BW2DpC#fOBAdFIVTzdj-oo6wYAD7ftNsE1Cbj_9Lbm2xCmGvUg')">
+                    <p>Capítulo 2</p>
+                </div>
+                <div class="pelicula">
+                    <img src="img/2.jpg" alt="Capítulo 3" onclick="abrirModal('https://mega.nz/embed/L2hlWI6T#QVmotg6s7Kd-HRVcXRK9RZflGZsUy9CYwsOl88ZGdlk')">
+                    <p>Capítulo 3</p>
+                </div>
+                <div class="pelicula">
+                    <img src="img/2.jpg" alt="Capítulo 4" onclick="abrirModal('https://mega.nz/embed/K3hkGbYS#3PhtCT5hhx2GwDGeImI1U6Rdm8eWC3Oo4F_4adk6PUU')">
+                    <p>Capítulo 4</p>
+                </div>
+                <div class="pelicula">
+                    <img src="img/2.jpg" alt="Capítulo 5" onclick="abrirModal('https://mega.nz/embed/j6YhkL6J#u3g7dRPU-yjsuqu-OYXJft7iKssUEK-pFyPiqIKcQRk')">
+                    <p>Capítulo 5</p>
+                </div>
+                <div class="pelicula">
+                    <img src="img/2.jpg" alt="Capítulo 6" onclick="abrirModal('https://mega.nz/embed/P74mzZiK#yrLxUm8DvS6Pr2GsY3AEQPO5OWxreZc9zWBM5Tw3Eb4')">
+                    <p>Capítulo 6</p>
+                </div>
+                <div class="pelicula">
+                    <img src="img/2.jpg" alt="Capítulo 7" onclick="abrirModal('https://mega.nz/embed/eipiWZhI#NK3j2cuWjQ_9jCOIRy6XnJcsZUqgGQ3W2tYELsqgQkY')">
+                    <p>Capítulo 7</p>
+                </div>
+                <div class="pelicula">
+                    <img src="img/2.jpg" alt="Capítulo 8" onclick="abrirModal('https://mega.nz/embed/fr5WETaL#Vm7ZxqXApcXfTblZItyKwd-1E0p6NZv48rV6tqTCvck')">
+                    <p>Capítulo 8</p>
+                </div>
+                <div class="pelicula">
+                    <img src="img/2.jpg" alt="Capítulo 9" onclick="abrirModal('https://mega.nz/embed/ujYinRDL#tgbfqIk7lG36H81YYYtOTlmtUPTggS9rDiZGyGFbUNw')">
+                    <p>Capítulo 9</p>
+                </div>
+                <div class="pelicula">
+                    <img src="img/2.jpg" alt="Capítulo 10" onclick="abrirModal('https://mega.nz/embed/e2JC0JRD#7VMJvhito8Pko-BoaCiZZltC8yASPvVOUk5hfy0Cz-8')">
+                    <p>Capítulo 10</p>
+                </div>
+                <div class="pelicula">
+                    <img src="img/2.jpg" alt="Capítulo 11" onclick="abrirModal('https://mega.nz/embed/Tj4QhbxL#p1_DSXqGPvDU4b12TXQMh8VxWli9QH3XPfaEFJQkwC0')">
+                    <p>Capítulo 11</p>
+                </div>
+                <div class="pelicula">
+                    <img src="img/2.jpg" alt="Capítulo 12" onclick="abrirModal('https://mega.nz/embed/LuB22YSC#0zreezd_L0RZTunzFHQITTwyUQcnw6szbtD6E2aGBn8')">
+                    <p>Capítulo 12</p>
+                </div>
+                <div class="pelicula">
+                    <img src="img/2.jpg" alt="Capítulo 13" onclick="abrirModal('https://mega.nz/embed/GvhjUYCS#aLgBSk8S9VvKPaLolFWgBoert0p8KuBD1ARBy-RM1YU')">
+                    <p>Capítulo 13</p>
+                </div>
+                <div class="pelicula">
+                    <img src="img/2.jpg" alt="Capítulo 14" onclick="abrirModal('https://mega.nz/embed/u2xHXbbT#wh80aocXna0mVOsmFmjb5A3AKu5IAEALP9topO5Wyx4')">
+                    <p>Capítulo 14</p>
+                </div>
+                <div class="pelicula">
+                    <img src="img/2.jpg" alt="Capítulo 15" onclick="abrirModal('https://mega.nz/embed/r6ARhJ5S#WxIydM4SgaaSm3XXNTtnCWkYFgmDjllS13byUK5FKQI')">
+                    <p>Capítulo 15</p>
+                </div>
+                <div class="pelicula">
+                    <img src="img/2.jpg" alt="Capítulo 16" onclick="abrirModal('https://mega.nz/embed/D7h1HYxb#oonmqQwENKtf8LwjLdW7xQ9pCw97TJDKJbtJtbQkpGI')">
+                    <p>Capítulo 16</p>
+                </div>
+                <div class="pelicula">
+                    <img src="img/2.jpg" alt="Capítulo 17" onclick="abrirModal('https://mega.nz/embed/wjtAFKrK#DcoXuwL3ID6eQ99POfLUzycaWn8RHtTkVsC4KnqgevI')">
+                    <p>Capítulo 17</p>
+                </div>
+                <div class="pelicula">
+                    <img src="img/2.jpg" alt="Capítulo 18" onclick="abrirModal('https://mega.nz/embed/0yk1WSpZ#g4xM1CVX3CJttszxMAEeiXZFPzXH4loo5C2x4j-k5U8')">
+                    <p>Capítulo 18</p>
+                </div>
+                <div class="pelicula">
+                    <img src="img/2.jpg" alt="Capítulo 19" onclick="abrirModal('https://mega.nz/embed/h68W3ZST#2e6kQTw-Ii3h0U8YMQhe_fTaar9wMM1Xbwh8CCaK-Pk')">
+                    <p>Capítulo 19</p>
+                </div>
+                <div class="pelicula">
+                    <img src="img/2.jpg" alt="Capítulo 20" onclick="abrirModal('https://mega.nz/embed/I3EhERja#tZ9Ld6TXCIvMbVfI_SLVPpaVCzgcvOICYYN2nkX9op4')">
+                    <p>Capítulo 20</p>
+                </div>
+            </div>
+            <button class="prev" onclick="moverCarousel('carousel-jardin', -1)">&#10094;</button>
+            <button class="next" onclick="moverCarousel('carousel-jardin', 1)">&#10095;</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Teatro</h2>
+        <div class="carousel">
+            <div class="carousel-images" id="carousel-teatro">
+                <div class="pelicula">
+                    <img src="img/3.jpeg" alt="Teatro 1" onclick="abrirModal('https://mega.nz/embed/sy9j2KxQ#3z7KjPbPSE5aHCyAhWggoWtw3MgN6rKzTf0PIabUC_w')">
+                    <p>Teatro 1</p>
+                </div>
+                <div class="pelicula">
+                    <img src="img/3.jpeg" alt="Teatro 2" onclick="abrirModal('https://mega.nz/embed/EyNTUJJB#B1zfOJ4uKNdak4QT1wKEXMO255FAQlu9NdI-7-wc1hI')">
+                    <p>Teatro 2</p>
+                </div>
+            </div>
+            <button class="prev" onclick="moverCarousel('carousel-teatro', -1)">&#10094;</button>
+            <button class="next" onclick="moverCarousel('carousel-teatro', 1)">&#10095;</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Drake & Josh</h2>
+        <div class="carousel">
+            <div class="carousel-images" id="carousel-drake">
+                <div class="pelicula">
+                    <img src="img/drake.jpg" alt="Drake 1" onclick="abrirModal('https://mega.nz/embed/57VD2YyT#2ivqOuiiRZ-_9kJx_M8DamOe4ISHgJ4uZIFT88SMrSQ')">
+                    <p>Episodio 1</p>
+                </div>
+                <div class="pelicula">
+                    <img src="img/drake.jpg" alt="Drake 2" onclick="abrirModal('https://mega.nz/embed/ErlmVDoT#2CJkxGz1Qh-o8lWdMl0Mp342t-ul4ts3IzUdA7uFBcM')">
+                    <p>Episodio 2</p>
+                </div>
+                <div class="pelicula">
+                    <img src="img/drake.jpg" alt="Drake 3" onclick="abrirModal('https://mega.nz/embed/unQxiL5D#n6TwWzK_zcWMLYKeNmc35-_2Wv6FEUh_XNxBTHH0b7U')">
+                    <p>Episodio 3</p>
+                </div>
+            </div>
+            <button class="prev" onclick="moverCarousel('carousel-drake', -1)">&#10094;</button>
+            <button class="next" onclick="moverCarousel('carousel-drake', 1)">&#10095;</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Fiesta</h2>
+        <div class="carousel">
+            <div class="carousel-images" id="carousel-fiesta">
+                <div class="pelicula">
+                    <img src="img/Captura.JPG" alt="Fiesta 2023" onclick="abrirModal('https://mega.nz/embed/U2FwETIC#4a6gg220HchevJTCiE4kKL-uiqi5Db9yPyGsJiBTDS8')">
+                    <p>Fiesta 2023</p>
+                </div>
+                <div class="pelicula">
+                    <img src="img/Captura.JPG" alt="Fiesta 2024" onclick="abrirModal('https://mega.nz/embed/FnE2VRKR#Lt3pY1ydE_Ss3NYluSrVKWP4bwhu_hOJIcPjko1ezQk')">
+                    <p>Fiesta 2024</p>
+                </div>
+            </div>
+            <button class="prev" onclick="moverCarousel('carousel-fiesta', -1)">&#10094;</button>
+            <button class="next" onclick="moverCarousel('carousel-fiesta', 1)">&#10095;</button>
+        </div>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="cerrarModal()">&times;</span>
+            <iframe id="modal-iframe" src="" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <script>
+        // Función para abrir el modal con el video
+        function abrirModal(url) {
+            const modal = document.getElementById('modal');
+            const iframe = document.getElementById('modal-iframe');
+            iframe.src = url;
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Función para cerrar el modal
+        function cerrarModal() {
+            const modal = document.getElementById('modal');
+            const iframe = document.getElementById('modal-iframe');
+            iframe.src = '';
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Función para mover el carousel
+        function moverCarousel(carouselId, direction) {
+            const carousel = document.getElementById(carouselId);
+            const scrollAmount = 300; // Cantidad de desplazamiento
+            carousel.scrollBy({
+                left: direction * scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+
+        // Cerrar modal al hacer clic fuera del contenido
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target == modal) {
+                cerrarModal();
+            }
+        }
+    </script>
+</body>
+</html>

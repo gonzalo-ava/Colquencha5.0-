@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix - Iniciar sesión</title>
+    <style>
+        /* Estilos generales */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: black;
+        }
+
+        /* Fondo con superposición */
+        .background {
+            background: url('https://assets.nflxext.com/ffe/siteui/vlv3/24f8c213-a8b2-411e-8a16-d9c17bfc41b5/1b3c364d-32eb-4f37-95d4-06f11e203e98/BO-es-20230814-popsignuptwoweeks-perspective_alpha_website_large.jpg') no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-blend-mode: darken;
+        }
+
+        /* Contenedor de inicio de sesión */
+        .login-container {
+            background: rgba(0, 0, 0, 0.75);
+            padding: 40px;
+            width: 400px;
+            border-radius: 5px;
+            color: white;
+            text-align: center;
+        }
+
+        .login-container h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background: #333;
+            color: white;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            background: #e50914;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        .login-container button:hover {
+            background: #b20710;
+        }
+
+        .extras {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+        }
+
+        .extras a {
+            color: #b3b3b3;
+            text-decoration: none;
+        }
+
+        .extras a:hover {
+            text-decoration: underline;
+        }
+
+        p {
+            margin-top: 20px;
+        }
+
+        p a {
+            color: white;
+            text-decoration: none;
+        }
+
+        p a:hover {
+            text-decoration: underline;
+        }
+
+        small {
+            display: block;
+            margin-top: 15px;
+            color: #b3b3b3;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="login-container">
+            <h1>Iniciar sesión</h1>
+            <form id="loginForm">
+                <input type="text" id="username" placeholder="Usuario" required>
+                <input type="password" id="password" placeholder="Contraseña" required>
+                <button type="button" onclick="validateLogin()">Iniciar sesión</button>
+                <div class="extras">
+                    <label>
+                        <input type="checkbox"> Recuérdame
+                    </label>
+                    <a href="#">¿Necesitas ayuda?</a>
+                </div>
+            </form>
+            <p>¿Primera vez en Peliculas ? <a href="#">Suscríbete ahora</a></p>
+            <small>
+                Esta página está protegida por Google reCAPTCHA para comprobar que no eres un robot.
+            </small>
+        </div>
+    </div>
+
+    <script>
+        function validateLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === 'Gonzalo' && password === '1234567') {
+                alert('¡Inicio de sesión exitoso! Bienvenido, Gonzalo.');
+                window.location.href = 'asets/index2.html '; // Redirección simulada
+            } else {
+                alert('¡Inicio de sesión exitoso! Bienvenido, Gonzalo.');
+                window.location.href = 'asets/index2.html '; // Redirección simulada
+            }
+        }
+    </script>
+</body>
+</html>
